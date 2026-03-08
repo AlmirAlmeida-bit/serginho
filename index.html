@@ -58,19 +58,14 @@
 
     <!-- Logo / Escudo Easter Egg -->
     <div class="flex items-center gap-3">
-      <svg id="fla-shield" onclick="easterEgg()" width="42" height="42" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 5 L95 25 L95 70 C95 95 50 115 50 115 C50 115 5 95 5 70 L5 25 Z" fill="#C1272D"/>
-        <path d="M50 5 L95 25 L95 70 C95 95 50 115 50 115 L50 5 Z" fill="#000"/>
-        <text x="50" y="75" text-anchor="middle" font-size="38" fill="#fff" font-weight="bold" font-family="Arial">CRF</text>
-      </svg>
-      <span class="font-racing text-flared text-xl tracking-wider">SERGINHO 70</span>
+      <img id="fla-shield" src="assets/logo.png" alt="Flamengo" width="54" height="62" style="object-fit:contain;" />
+      <span class="font-racing text-flared tracking-wider" style="font-size:clamp(1.3rem,4vw,1.75rem);">SERGINHO 70</span>
     </div>
 
     <!-- Nav links desktop -->
     <div class="nav-links-desktop" style="font-size:.85rem; font-weight:700; letter-spacing:.08em; color:#d1d5db;">
       <a href="#historia" style="color:inherit; text-decoration:none;" onmouseover="this.style.color='#C1272D'" onmouseout="this.style.color='#d1d5db'">HISTÓRIA</a>
       <a href="#galeria"  style="color:inherit; text-decoration:none;" onmouseover="this.style.color='#C1272D'" onmouseout="this.style.color='#d1d5db'">GALERIA</a>
-      <a href="#convite"  style="color:inherit; text-decoration:none;" onmouseover="this.style.color='#C1272D'" onmouseout="this.style.color='#d1d5db'">CONVITE</a>
     </div>
 
     <!-- Hamburger animado (mobile) -->
@@ -86,7 +81,6 @@
 <div id="mobile-menu-overlay">
   <a href="#historia" onclick="toggleMenu()">HISTÓRIA</a>
   <a href="#galeria"  onclick="toggleMenu()">GALERIA</a>
-  <a href="#convite"  onclick="toggleMenu()">CONVITE</a>
   <div class="menu-footer">
     <p style="font-family:'Racing Sans One',cursive; color:#C1272D; font-size:1.1rem; letter-spacing:.15em;">SERGINHO 70</p>
     <p style="color:#4b5563; font-size:.75rem; margin-top:.25rem;">❤️ 70 Anos de Emoção nas Pistas da Vida 🏁</p>
@@ -107,41 +101,41 @@
 
   <!-- Badge -->
   <div data-aos="zoom-in" data-aos-delay="200"
-       class="mb-6 bg-flaGold text-flablk font-bold text-center px-5 py-2 rounded-full text-xs md:text-sm tracking-widest uppercase shadow-lg rotate-[-2deg]"
-       style="font-family:'Racing Sans One',cursive;">
+       class="mb-2 font-bold text-center px-5 py-2 rounded-full text-xs md:text-sm tracking-widest uppercase shadow-lg rotate-[-2deg]"
+       style="font-family:'Racing Sans One',cursive; margin-top:2rem; background:#000; color:#C1272D;">
     🏆 O Maior Vendedor de Auto-Peças do Brasil 🏆
   </div>
 
   <!-- Título principal -->
   <h1 data-aos="fade-up" data-aos-delay="100"
-      class="hero-title font-racing text-center px-4 leading-tight mb-2"
+      class="hero-title font-racing text-center px-4 leading-tight mb-1"
       style="font-size:clamp(2.2rem,7vw,5.5rem);">
     <span class="metallic">SERGINHO</span>
   </h1>
   <h2 data-aos="fade-up" data-aos-delay="250"
-      class="font-racing text-center text-white px-4 mb-1"
+      class="font-racing text-center text-white px-4 mb-0"
       style="font-size:clamp(1rem,3vw,2rem); letter-spacing:.12em;">
     70 ANOS DE EMOÇÃO NAS
   </h2>
   <h2 data-aos="fade-up" data-aos-delay="350"
-      class="font-racing text-center text-flared px-4 mb-8"
-      style="font-size:clamp(1.4rem,4.5vw,3rem); letter-spacing:.08em; text-shadow:0 0 30px #C1272Daa;">
+      class="font-racing text-center text-white px-4 mb-3"
+      style="font-size:clamp(1.4rem,4.5vw,3rem); letter-spacing:.08em;">
     🏁 PISTAS DA VIDA 🏁
   </h2>
 
   <!-- Apelidos -->
-  <div data-aos="fade-up" data-aos-delay="400" class="flex flex-wrap justify-center gap-4 mb-10 px-4">
-    <span class="bg-black/50 border border-flared/50 text-flared font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
+  <div data-aos="fade-up" data-aos-delay="400" class="flex flex-wrap justify-center gap-3 mb-4 px-4">
+    <span style="background:#000; border:2px solid #000; color:#C1272D;" class="font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
       💑 "Ginho" — pra Márcia
     </span>
-    <span class="bg-black/50 border border-flaGold/50 text-flaGold font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
+    <span style="background:#000; border:2px solid #000; color:#C1272D;" class="font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
       👊 "Serginho Bundinha" — pros amigos
     </span>
   </div>
 
   <!-- Foto principal -->
   <div data-aos="zoom-in" data-aos-delay="500"
-       class="relative max-w-sm md:max-w-md w-full mx-4">
+       class="relative max-w-sm md:max-w-md w-full mx-4 mt-2">
     <div class="absolute -inset-1 rounded-2xl"
          style="background:linear-gradient(45deg,#C1272D,#FFD700,#C1272D); filter:blur(12px); opacity:.7; z-index:-1;">
     </div>
@@ -191,12 +185,8 @@
 
       <div data-aos="fade-right" data-aos-delay="100"
            class="bg-gradient-to-b from-flared/20 to-black/50 border border-flared/30 rounded-2xl p-8 text-center hover:border-flared transition-all duration-300">
-        <div onclick="easterEgg()" class="cursor-pointer">
-          <svg width="80" height="90" viewBox="0 0 100 120" class="mx-auto mb-4" style="filter:drop-shadow(0 0 12px #C1272D88)">
-            <path d="M50 5 L95 25 L95 70 C95 95 50 115 50 115 C50 115 5 95 5 70 L5 25 Z" fill="#C1272D"/>
-            <path d="M50 5 L95 25 L95 70 C95 95 50 115 50 115 L50 5 Z" fill="#000"/>
-            <text x="50" y="75" text-anchor="middle" font-size="34" fill="#fff" font-weight="bold" font-family="Arial">CRF</text>
-          </svg>
+        <div>
+          <img src="assets/logo.png" alt="Flamengo" width="80" height="90" class="mx-auto mb-4" style="object-fit:contain; filter:drop-shadow(0 0 3px #C1272D) drop-shadow(0 0 10px #C1272Dcc) drop-shadow(0 0 18px #C1272D88);" />
         </div>
         <h3 class="font-racing text-flared text-2xl mb-2">Mengão do Coração</h3>
         <p class="text-gray-400 text-sm">Vermelho e preto correndo nas veias — Flamengo até morrer!</p>
@@ -269,23 +259,23 @@
 <!-- ═══════════════════════════════════════════
      GALERIA
 ════════════════════════════════════════════ -->
-<section id="galeria" class="py-20 px-4">
+<section id="galeria" class="py-20 px-4" style="background:#C1272D;">
   <div class="max-w-6xl mx-auto">
 
     <h2 data-aos="fade-up" class="sec-title font-racing text-center text-4xl md:text-5xl text-white mb-4">
       GALERIA DE MEMÓRIAS
     </h2>
-    <p data-aos="fade-up" data-aos-delay="100" class="text-center text-gray-400 mb-10 max-w-xl mx-auto">
+    <p data-aos="fade-up" data-aos-delay="100" class="text-center text-black mb-10 max-w-xl mx-auto font-bold">
       Momentos que valem mais que qualquer troféu. Clique nas fotos para ampliar!
     </p>
 
     <!-- Tabs -->
     <div data-aos="fade-up" data-aos-delay="200" class="flex flex-wrap justify-center gap-3 mb-10">
-      <button onclick="filterGallery('todos')"     class="tab-btn active font-bold px-5 py-2 rounded-full border border-flared/40 text-sm transition-all" data-cat="todos">Todos</button>
-      <button onclick="filterGallery('familia')"   class="tab-btn font-bold px-5 py-2 rounded-full border border-flared/40 text-sm transition-all hover:bg-flared/20" data-cat="familia">💑 Márcia & Família</button>
-      <button onclick="filterGallery('filhos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-flared/40 text-sm transition-all hover:bg-flared/20" data-cat="filhos">👦 Pillar & Caio</button>
-      <button onclick="filterGallery('sobrinhos')" class="tab-btn font-bold px-5 py-2 rounded-full border border-flared/40 text-sm transition-all hover:bg-flared/20" data-cat="sobrinhos">👨‍👩‍👧 Sobrinhos</button>
-      <button onclick="filterGallery('amigos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-flared/40 text-sm transition-all hover:bg-flared/20" data-cat="amigos">🤜 Amigos</button>
+      <button onclick="filterGallery('todos')"     class="tab-btn active font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black" data-cat="todos">Todos</button>
+      <button onclick="filterGallery('familia')"   class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="familia">💑 Márcia & Família</button>
+      <button onclick="filterGallery('filhos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="filhos">👦 Pillar & Caio</button>
+      <button onclick="filterGallery('sobrinhos')" class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="sobrinhos">👨‍👩‍👧 Sobrinhos</button>
+      <button onclick="filterGallery('amigos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="amigos">🤜 Amigos</button>
     </div>
 
     <!-- Gallery grid -->
@@ -333,58 +323,6 @@
 <div class="flag-stripe"></div>
 
 <!-- ═══════════════════════════════════════════
-     CONVITE DIGITAL
-════════════════════════════════════════════ -->
-<section id="convite" class="py-20 px-4">
-  <div class="max-w-3xl mx-auto">
-
-    <h2 data-aos="fade-up" class="sec-title font-racing text-center text-4xl md:text-5xl text-white mb-12">
-      O CONVITE
-    </h2>
-
-    <div data-aos="zoom-in" class="chalkboard p-8 md:p-12 relative">
-      <div class="absolute top-4 left-4 text-green-300/30 text-6xl font-chalk select-none">🏎</div>
-      <div class="absolute bottom-4 right-4 text-green-300/30 text-6xl font-chalk select-none">🏆</div>
-
-      <div class="text-center">
-        <p class="font-chalk text-green-200 text-lg tracking-widest uppercase mb-2 opacity-70">🍖 Vem aí o 🍖</p>
-
-        <h3 class="font-chalk text-white text-4xl md:text-6xl mb-2" style="text-shadow: 2px 2px 8px rgba(0,0,0,.8);">
-          Churrasco
-        </h3>
-        <h3 class="font-chalk text-green-200 text-3xl md:text-5xl mb-6" style="text-shadow: 2px 2px 8px rgba(0,0,0,.8);">
-          do Serginho
-        </h3>
-
-        <div class="border-t border-b border-green-300/30 py-6 my-6 space-y-4">
-          <div class="flex items-center justify-center gap-3">
-            <span class="text-2xl">📅</span>
-            <span class="font-chalk text-white text-2xl md:text-3xl">07 de Março de 2026</span>
-          </div>
-          <div class="flex items-center justify-center gap-3">
-            <span class="text-2xl">📍</span>
-            <span class="font-chalk text-green-200 text-xl md:text-2xl">Gabinal I</span>
-          </div>
-        </div>
-
-        <p class="font-chalk text-green-300 text-xl mb-2">Comemorando</p>
-        <p class="font-racing text-flaGold text-5xl md:text-7xl" style="text-shadow: 0 0 30px #FFD70088;">70 ANOS!</p>
-
-        <div class="mt-6 flex flex-wrap justify-center gap-4 text-3xl">
-          <span title="Flamengo">🏴</span>
-          <span title="Corrida">🏎️</span>
-          <span title="Troféu">🏆</span>
-          <span title="Churrasco">🔥</span>
-          <span title="Festa">🎉</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="flag-stripe"></div>
-
-<!-- ═══════════════════════════════════════════
      MENSAGEM FINAL
 ════════════════════════════════════════════ -->
 <section class="py-24 px-4 text-center relative overflow-hidden">
@@ -398,10 +336,10 @@
       Parabéns, <span class="text-flared">Ginho!</span>
     </h2>
     <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-      70 anos vividos com a intensidade de um piloto na última volta, a paixão de um torcedor no Maracanã e o amor de quem sabe que a vida é a melhor corrida de todas.
+      70 anos vividos com a intensidade de um piloto que sempre está nos pódios, a paixão de um torcedor no Maracanã e o amor de quem sabe que a vida é a melhor corrida de todas.
     </p>
     <p class="font-racing text-flaGold text-2xl md:text-3xl">
-      🏁 Que venham os próximos 70! 🏁
+      <span class="hidden md:inline">🏁 </span>Que venham os próximos 70!<span class="hidden md:inline"> 🏁</span>
     </p>
 
     <button onclick="launchConfetti()"
@@ -421,17 +359,9 @@
   <p class="text-gray-500 text-sm font-chalk">
     Feito com muito amor para o nosso Serginho — 70 anos de pura emoção!
   </p>
-  <p class="text-gray-700 text-xs mt-2">Flamengo • Senna • Família • Amigos • Sempre</p>
+  <p class="text-gray-700 text-xs mt-2">Flamengo • Senna • Família • Amigos</p>
 </footer>
 
-<!-- ═══════════════════════════════════════════
-     BOTÃO WHATSAPP FLUTUANTE
-════════════════════════════════════════════ -->
-<div id="wa-btn" onclick="sendWhatsApp()" title="Mandar Parabéns no WhatsApp!">
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-</div>
 
 <!-- Véu da galeria -->
 <div id="gallery-veil"></div>
