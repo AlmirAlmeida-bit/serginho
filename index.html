@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Scroll para o topo antes de qualquer render -->
+  <script>if('scrollRestoration'in history)history.scrollRestoration='manual';window.scrollTo(0,0);</script>
+
+  <title>Serginho – 70 Anos de Emoção nas Pistas da Vida 🏁</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Permanent+Marker&family=Montserrat:wght@400;700;900&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <!-- AOS – Animate On Scroll -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN (deve vir antes do tailwind.config) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            flared:  '#C1272D',
+            flablk:  '#0a0a0a',
+            flaGold: '#FFD700',
+            track:   '#1a1a1a',
+          },
+          fontFamily: {
+            racing: ['Racing Sans One', 'cursive'],
+            chalk:  ['Special Elite', 'cursive'],
+            marker: ['Permanent Marker', 'cursive'],
+            sans:   ['Montserrat', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     CHECKERED FLAG TOP
+════════════════════════════════════════════ -->
+<div class="flag-stripe"></div>
+
+<!-- ═══════════════════════════════════════════
+     NAV
+════════════════════════════════════════════ -->
+<nav class="border-b border-flared/20">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+
+    <!-- Logo / Escudo Easter Egg -->
+    <div class="flex items-center gap-3">
+      <img id="fla-shield" src="assets/logo.png" alt="Flamengo" width="54" height="62" style="object-fit:contain;" />
+      <span class="font-racing text-flared tracking-wider" style="font-size:clamp(1.3rem,4vw,1.75rem);">SERGINHO 70</span>
+    </div>
+
+    <!-- Nav links desktop -->
+    <div class="nav-links-desktop" style="font-size:.85rem; font-weight:700; letter-spacing:.08em; color:#d1d5db;">
+      <a href="#historia" style="color:inherit; text-decoration:none;" onmouseover="this.style.color='#C1272D'" onmouseout="this.style.color='#d1d5db'">HISTÓRIA</a>
+      <a href="#galeria"  style="color:inherit; text-decoration:none;" onmouseover="this.style.color='#C1272D'" onmouseout="this.style.color='#d1d5db'">GALERIA</a>
+    </div>
+
+    <!-- Hamburger animado (mobile) -->
+    <button id="hamburger" onclick="toggleMenu()" aria-label="Abrir menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Fullscreen mobile menu overlay -->
+<div id="mobile-menu-overlay">
+  <a href="#historia" onclick="toggleMenu()">HISTÓRIA</a>
+  <a href="#galeria"  onclick="toggleMenu()">GALERIA</a>
+  <div class="menu-footer">
+    <p style="font-family:'Racing Sans One',cursive; color:#C1272D; font-size:1.1rem; letter-spacing:.15em;">SERGINHO 70</p>
+    <p style="color:#4b5563; font-size:.75rem; margin-top:.25rem;">❤️ 70 Anos de Emoção nas Pistas da Vida 🏁</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════════ -->
+<section class="hero-bg min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-20">
+
+  <!-- Linhas decorativas de corrida -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-0 w-full h-full opacity-10"
+         style="background: repeating-linear-gradient(45deg, transparent, transparent 40px, #C1272D22 40px, #C1272D22 42px);">
+    </div>
+  </div>
+
+  <!-- Badge -->
+  <div data-aos="zoom-in" data-aos-delay="200"
+       class="mb-2 font-bold text-center px-5 py-2 rounded-full text-xs md:text-sm tracking-widest uppercase shadow-lg rotate-[-2deg]"
+       style="font-family:'Racing Sans One',cursive; margin-top:2rem; background:#000; color:#C1272D;">
+    🏆 O Maior Vendedor de Auto-Peças do Brasil 🏆
+  </div>
+
+  <!-- Título principal -->
+  <h1 data-aos="fade-up" data-aos-delay="100"
+      class="hero-title font-racing text-center px-4 leading-tight mb-1"
+      style="font-size:clamp(2.2rem,7vw,5.5rem);">
+    <span class="metallic">SERGINHO</span>
+  </h1>
+  <h2 data-aos="fade-up" data-aos-delay="250"
+      class="font-racing text-center text-white px-4 mb-0"
+      style="font-size:clamp(1rem,3vw,2rem); letter-spacing:.12em;">
+    70 ANOS DE EMOÇÃO NAS
+  </h2>
+  <h2 data-aos="fade-up" data-aos-delay="350"
+      class="font-racing text-center text-white px-4 mb-3"
+      style="font-size:clamp(1.4rem,4.5vw,3rem); letter-spacing:.08em;">
+    🏁 PISTAS DA VIDA 🏁
+  </h2>
+
+  <!-- Apelidos -->
+  <div data-aos="fade-up" data-aos-delay="400" class="flex flex-wrap justify-center gap-3 mb-4 px-4">
+    <span style="background:#000; border:2px solid #000; color:#C1272D;" class="font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
+      💑 "Ginho" — pra Márcia
+    </span>
+    <span style="background:#000; border:2px solid #000; color:#C1272D;" class="font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
+      👊 "Serginho Bundinha" — pros amigos
+    </span>
+  </div>
+
+  <!-- Foto principal -->
+  <div data-aos="zoom-in" data-aos-delay="500"
+       class="relative max-w-sm md:max-w-md w-full mx-4 mt-2">
+    <div class="absolute -inset-1 rounded-2xl"
+         style="background:linear-gradient(45deg,#C1272D,#FFD700,#C1272D); filter:blur(12px); opacity:.7; z-index:-1;">
+    </div>
+    <img src="assets/serginho.png" alt="Serginho ao lado do busto de Ayrton Senna"
+         class="w-full rounded-2xl shadow-2xl border-2 border-flared/50 object-cover"
+         style="max-height:460px; object-position:top;" />
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent rounded-b-2xl p-4">
+      <p class="font-chalk text-white text-center text-lg">
+        Ao lado do lendário Ayrton Senna 🏎️
+      </p>
+    </div>
+  </div>
+
+  <!-- Seta scroll -->
+  <div class="mt-12 animate-bounce text-3xl text-flared/70">↓</div>
+</section>
+
+<div class="flag-stripe"></div>
+
+<!-- ═══════════════════════════════════════════
+     HISTÓRIA / CONTADOR
+════════════════════════════════════════════ -->
+<section id="historia" class="py-20 px-4 relative overflow-hidden">
+  <div class="track-line"></div>
+  <div class="max-w-5xl mx-auto">
+
+    <h2 data-aos="fade-up" class="sec-title font-racing text-center text-4xl md:text-5xl text-white mb-16">
+      70 ANOS DE GLÓRIA
+    </h2>
+
+    <!-- Contador -->
+    <div data-aos="zoom-in" class="flex flex-col items-center mb-20">
+      <div class="flex items-end gap-4">
+        <div class="text-center">
+          <div class="counter-digit" id="counter">0</div>
+          <p class="font-racing text-gray-400 text-lg tracking-widest uppercase mt-1">Anos</p>
+        </div>
+        <div class="text-6xl md:text-8xl text-flaGold mb-4">🏁</div>
+      </div>
+      <p class="text-gray-300 mt-4 text-center max-w-md">
+        Sete décadas percorridas com a velocidade de quem nunca pisou no freio — na vida, no trabalho e no amor pelo Fla!
+      </p>
+    </div>
+
+    <!-- Paixões -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+
+      <div data-aos="fade-right" data-aos-delay="100"
+           class="bg-gradient-to-b from-flared/20 to-black/50 border border-flared/30 rounded-2xl p-8 text-center hover:border-flared transition-all duration-300">
+        <div>
+          <img src="assets/logo.png" alt="Flamengo" width="80" height="90" class="mx-auto mb-4" style="object-fit:contain; filter:drop-shadow(0 0 3px #C1272D) drop-shadow(0 0 10px #C1272Dcc) drop-shadow(0 0 18px #C1272D88);" />
+        </div>
+        <h3 class="font-racing text-flared text-2xl mb-2">Mengão do Coração</h3>
+        <p class="text-gray-400 text-sm">Vermelho e preto correndo nas veias — Flamengo até morrer!</p>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="200"
+           class="bg-gradient-to-b from-flaGold/10 to-black/50 border border-flaGold/30 rounded-2xl p-8 text-center hover:border-flaGold transition-all duration-300">
+        <div class="text-7xl mb-4">🏎️</div>
+        <h3 class="font-racing text-flaGold text-2xl mb-2">Espírito Senna</h3>
+        <p class="text-gray-400 text-sm">A emoção de Ayrton vive em cada conversa, em cada foto, em cada memória especial.</p>
+      </div>
+
+      <div data-aos="fade-left" data-aos-delay="300"
+           class="bg-gradient-to-b from-gray-700/20 to-black/50 border border-gray-600/30 rounded-2xl p-8 text-center hover:border-gray-400 transition-all duration-300">
+        <div class="text-7xl mb-4">🔧</div>
+        <h3 class="font-racing text-gray-300 text-2xl mb-2">Rei das Auto-Peças</h3>
+        <p class="text-gray-400 text-sm">Décadas de dedicação que fizeram dele o maior dos representantes. Uma lenda!</p>
+      </div>
+    </div>
+
+    <!-- Linha do tempo -->
+    <div data-aos="fade-up" class="relative border-l-4 border-flared/40 ml-6 md:ml-12 space-y-10 pb-4">
+      <div class="absolute -left-[10px] top-0 bottom-0 w-2 bg-flared/20 rounded"></div>
+
+      <div class="relative pl-8">
+        <div class="absolute -left-[22px] w-10 h-10 bg-flared rounded-full flex items-center justify-center text-lg shadow-lg shadow-flared/40">🍼</div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <p class="font-racing text-flared text-xl">1956</p>
+          <p class="text-gray-300">Nascimento do Serginho — o mundo ganhou um piloto de vida!</p>
+        </div>
+      </div>
+
+      <div class="relative pl-8">
+        <div class="absolute -left-[22px] w-10 h-10 bg-flaGold rounded-full flex items-center justify-center text-lg shadow-lg shadow-flaGold/40">💍</div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <p class="font-racing text-flaGold text-xl">Grande Amor</p>
+          <p class="text-gray-300">Encontrou Márcia — sua co-pilota de todas as pistas da vida.</p>
+        </div>
+      </div>
+
+      <div class="relative pl-8">
+        <div class="absolute -left-[22px] w-10 h-10 bg-flared rounded-full flex items-center justify-center text-lg shadow-lg shadow-flared/40">👨‍👧‍👦</div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <p class="font-racing text-flared text-xl">Família</p>
+          <p class="text-gray-300">Pillar e Caio — os filhos que são o pódio da sua vida.</p>
+        </div>
+      </div>
+
+      <div class="relative pl-8">
+        <div class="absolute -left-[22px] w-10 h-10 bg-flaGold rounded-full flex items-center justify-center text-lg shadow-lg shadow-flaGold/40">🏎️</div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <p class="font-racing text-flaGold text-xl">Ídolo Eterno</p>
+          <p class="text-gray-300">Ayrton Senna — o herói que inspira Serginho até hoje.</p>
+        </div>
+      </div>
+
+      <div class="relative pl-8">
+        <div class="absolute -left-[22px] w-10 h-10 bg-flared rounded-full flex items-center justify-center text-lg shadow-lg shadow-flared/40">🎂</div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <p class="font-racing text-flared text-xl">2026 — 70 ANOS!</p>
+          <p class="text-gray-300">Sete décadas de garra, amor, amizade e muita alegria!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="flag-stripe"></div>
+
+<!-- ═══════════════════════════════════════════
+     GALERIA
+════════════════════════════════════════════ -->
+<section id="galeria" class="py-20 px-4" style="background:#C1272D;">
+  <div class="max-w-6xl mx-auto">
+
+    <h2 data-aos="fade-up" class="sec-title font-racing text-center text-4xl md:text-5xl text-white mb-4">
+      GALERIA DE MEMÓRIAS
+    </h2>
+    <p data-aos="fade-up" data-aos-delay="100" class="text-center text-black mb-10 max-w-xl mx-auto font-bold">
+      Momentos que valem mais que qualquer troféu. Clique nas fotos para ampliar!
+    </p>
+
+    <!-- Tabs -->
+    <div data-aos="fade-up" data-aos-delay="200" class="flex flex-wrap justify-center gap-3 mb-10">
+      <button onclick="filterGallery('todos')"     class="tab-btn active font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black" data-cat="todos">Todos</button>
+      <button onclick="filterGallery('familia')"   class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="familia">💑 Márcia & Família</button>
+      <button onclick="filterGallery('filhos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="filhos">👦 Pillar & Caio</button>
+      <button onclick="filterGallery('sobrinhos')" class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="sobrinhos">👨‍👩‍👧 Sobrinhos</button>
+      <button onclick="filterGallery('amigos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="amigos">🤜 Amigos</button>
+    </div>
+
+    <!-- Gallery grid -->
+    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+      <div class="photo-card gallery-item col-span-2 row-span-2 h-72 md:h-96" data-cat="todos familia" onclick="openLightbox(this)">
+        <img src="assets/serginho.png" alt="Serginho com busto de Senna" loading="lazy" />
+        <div class="overlay"><span class="text-white font-bold text-sm">Serginho & Senna ❤️</span></div>
+      </div>
+
+      <div class="photo-card gallery-item h-44 md:h-48" data-cat="todos familia" onclick="openLightbox(this)">
+        <img src="assets/serginho2.png" alt="Serginho" loading="lazy" />
+        <div class="overlay"><span class="text-white font-bold text-sm">Sorriso do Ginho 😄</span></div>
+      </div>
+
+      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-flared/20 to-black/80 border border-flared/20 flex flex-col items-center justify-center" data-cat="todos amigos">
+        <div class="text-5xl mb-2">🤜🤛</div>
+        <p class="text-gray-400 text-xs text-center px-4">Adicione fotos<br>dos amigos aqui!</p>
+      </div>
+
+      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-flaGold/10 to-black/80 border border-flaGold/20 flex flex-col items-center justify-center" data-cat="todos filhos">
+        <div class="text-5xl mb-2">👦👦</div>
+        <p class="text-gray-400 text-xs text-center px-4">Pillar & Caio<br>Adicione as fotos!</p>
+      </div>
+
+      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-purple-900/30 to-black/80 border border-purple-500/20 flex flex-col items-center justify-center" data-cat="todos sobrinhos">
+        <div class="text-5xl mb-2">👨‍👩‍👧</div>
+        <p class="text-gray-400 text-xs text-center px-4">Sobrinhos<br>Adicione as fotos!</p>
+      </div>
+
+      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-gray-700/30 to-black/80 border border-gray-600/20 flex flex-col items-center justify-center" data-cat="todos familia">
+        <div class="text-5xl mb-2">💑</div>
+        <p class="text-gray-400 text-xs text-center px-4">Márcia & Ginho<br>Adicione as fotos!</p>
+      </div>
+
+      <div class="photo-card gallery-item col-span-2 h-44 md:h-48 bg-gradient-to-br from-flared/10 to-black/80 border border-flared/20 flex flex-col items-center justify-center" data-cat="todos amigos">
+        <div class="text-5xl mb-2">🎉</div>
+        <p class="text-gray-400 text-sm text-center px-4">Galeria em construção — envie suas fotos!</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="flag-stripe"></div>
+
+<!-- ═══════════════════════════════════════════
+     MENSAGEM FINAL
+════════════════════════════════════════════ -->
+<section class="py-24 px-4 text-center relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none opacity-5"
+       style="background: radial-gradient(ellipse at center, #C1272D 0%, transparent 70%);">
+  </div>
+
+  <div data-aos="zoom-in" class="max-w-3xl mx-auto">
+    <div class="text-7xl mb-6">🎂</div>
+    <h2 class="font-racing text-4xl md:text-6xl text-white mb-4">
+      Parabéns, <span class="text-flared">Ginho!</span>
+    </h2>
+    <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
+      70 anos vividos com a intensidade de um piloto que sempre está nos pódios, a paixão de um torcedor no Maracanã e o amor de quem sabe que a vida é a melhor corrida de todas.
+    </p>
+    <p class="font-racing text-flaGold text-2xl md:text-3xl">
+      <span class="hidden md:inline">🏁 </span>Que venham os próximos 70!<span class="hidden md:inline"> 🏁</span>
+    </p>
+
+    <button onclick="launchConfetti()"
+            class="mt-10 bg-flared hover:bg-red-700 text-white font-racing text-xl px-10 py-4 rounded-full shadow-lg shadow-flared/40 transition-all hover:scale-105 active:scale-95">
+      🎉 Celebrar Agora!
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="bg-black border-t border-flared/20 py-8 text-center">
+  <div class="flex flex-wrap justify-center gap-4 text-3xl mb-4">
+    <span>❤️</span><span>🖤</span><span>🏎️</span><span>🏁</span><span>🔧</span>
+  </div>
+  <p class="text-gray-500 text-sm font-chalk">
+    Feito com muito amor para o nosso Serginho — 70 anos de pura emoção!
+  </p>
+  <p class="text-gray-700 text-xs mt-2">Flamengo • Senna • Família • Amigos</p>
+</footer>
+
+
+<!-- Véu da galeria -->
+<div id="gallery-veil"></div>
+
+<!-- ═══════════════════════════════════════════
+     LIGHTBOX
+════════════════════════════════════════════ -->
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="" />
+</div>
+<button id="lightbox-close" onclick="closeLightbox()" aria-label="Fechar foto">✕</button>
+
+<!-- ═══════════════════════════════════════════
+     DEPENDÊNCIAS JS E SCRIPT PRINCIPAL
+════════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
