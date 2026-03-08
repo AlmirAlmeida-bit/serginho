@@ -1,384 +1,291 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+/* ═══════════════════════════════════════════
+   SERGINHO 70 ANOS — Scripts
+════════════════════════════════════════════ */
 
-  <!-- Scroll para o topo antes de qualquer render -->
-  <script>if('scrollRestoration'in history)history.scrollRestoration='manual';window.scrollTo(0,0);</script>
+/* ── Forçar topo ao carregar (mobile + desktop) ── */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+document.addEventListener('DOMContentLoaded', () => window.scrollTo(0, 0));
+window.addEventListener('load', () => window.scrollTo(0, 0));
 
-  <title>Serginho – 70 Anos de Emoção nas Pistas da Vida 🏁</title>
+/* ── AOS init ── */
+AOS.init({ once: true, duration: 800, easing: 'ease-out-cubic' });
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Permanent+Marker&family=Montserrat:wght@400;700;900&family=Special+Elite&display=swap" rel="stylesheet" />
+/* ══════════════════════════════════════════
+   GALERIA — efeito pop + fundo fosco
+══════════════════════════════════════════ */
+const veil = document.getElementById('gallery-veil');
 
-  <!-- AOS – Animate On Scroll -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+// detecta dispositivo touch
+const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
-  <!-- Tailwind CSS CDN (deve vir antes do tailwind.config) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            flared:  '#C1272D',
-            flablk:  '#0a0a0a',
-            flaGold: '#FFD700',
-            track:   '#1a1a1a',
-          },
-          fontFamily: {
-            racing: ['Racing Sans One', 'cursive'],
-            chalk:  ['Special Elite', 'cursive'],
-            marker: ['Permanent Marker', 'cursive'],
-            sans:   ['Montserrat', 'sans-serif'],
-          },
-        },
-      },
+function clearPopped() {
+  document.querySelectorAll('.photo-card.popped').forEach(c => c.classList.remove('popped'));
+  veil.classList.remove('active');
+}
+
+// variáveis para distinguir tap de scroll no mobile
+let _touchStartY = 0;
+let _touchStartX = 0;
+let _touchMoved   = false;
+
+document.querySelectorAll('.photo-card').forEach(card => {
+
+  /* ── Desktop: hover ── */
+  card.addEventListener('mouseenter', () => {
+    if (isTouchDevice()) return;
+    card.classList.add('popped');
+    veil.classList.add('active');
+  });
+  card.addEventListener('mouseleave', () => {
+    if (isTouchDevice()) return;
+    card.classList.remove('popped');
+    veil.classList.remove('active');
+  });
+
+  /* ── Mobile: tap (não scroll) ── */
+  card.addEventListener('touchstart', e => {
+    _touchStartY  = e.touches[0].clientY;
+    _touchStartX  = e.touches[0].clientX;
+    _touchMoved   = false;
+  }, { passive: true });
+
+  card.addEventListener('touchmove', e => {
+    const dy = Math.abs(e.touches[0].clientY - _touchStartY);
+    const dx = Math.abs(e.touches[0].clientX - _touchStartX);
+    if (dy > 8 || dx > 8) _touchMoved = true;
+  }, { passive: true });
+
+  card.addEventListener('touchend', () => {
+    if (_touchMoved) return;           // foi scroll — ignora
+    const wasPopped = card.classList.contains('popped');
+    clearPopped();
+    if (!wasPopped) {
+      card.classList.add('popped');
+      veil.classList.add('active');
     }
-  </script>
+  }, { passive: true });
+});
 
-  <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+/* ── Fechar ao clicar no véu ── */
+veil.addEventListener('click',      clearPopped);
+veil.addEventListener('touchstart', clearPopped, { passive: true });
 
-<!-- ═══════════════════════════════════════════
-     CHECKERED FLAG TOP
-════════════════════════════════════════════ -->
-<div class="flag-stripe"></div>
+/* ── Fechar automaticamente ao fazer scroll ── */
+window.addEventListener('scroll', () => {
+  if (document.querySelector('.photo-card.popped')) clearPopped();
+}, { passive: true });
 
-<!-- ═══════════════════════════════════════════
-     NAV
-════════════════════════════════════════════ -->
-<nav class="border-b border-flared/20">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+/* ══════════════════════════════════════════
+   MENU MOBILE — fullscreen overlay
+══════════════════════════════════════════ */
+function toggleMenu() {
+  const overlay = document.getElementById('mobile-menu-overlay');
+  const btn     = document.getElementById('hamburger');
+  const isOpen  = overlay.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
 
-    <!-- Logo / Escudo Easter Egg -->
-    <div class="flex items-center gap-3">
-      <img id="fla-shield" src="assets/logo.png" alt="Flamengo" width="54" height="62" style="object-fit:contain;" />
-      <span class="font-racing text-flared tracking-wider" style="font-size:clamp(1.3rem,4vw,1.75rem);">SERGINHO 70</span>
-    </div>
+// fechar ao pressionar ESC
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    const overlay = document.getElementById('mobile-menu-overlay');
+    if (overlay.classList.contains('open')) toggleMenu();
+  }
+});
 
-    <!-- Nav links desktop -->
-    <div class="nav-links-desktop" style="font-size:.85rem; font-weight:700; letter-spacing:.08em; color:#d1d5db;">
-      <a href="#historia" style="color:inherit; text-decoration:none;" onmouseover="this.style.color='#C1272D'" onmouseout="this.style.color='#d1d5db'">HISTÓRIA</a>
-      <a href="#galeria"  style="color:inherit; text-decoration:none;" onmouseover="this.style.color='#C1272D'" onmouseout="this.style.color='#d1d5db'">GALERIA</a>
-    </div>
+/* ══════════════════════════════════════════
+   SMOOTH SCROLL — links âncora
+══════════════════════════════════════════ */
+document.addEventListener('click', function (e) {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+  const target = document.querySelector(link.getAttribute('href'));
+  if (!target) return;
+  e.preventDefault();
 
-    <!-- Hamburger animado (mobile) -->
-    <button id="hamburger" onclick="toggleMenu()" aria-label="Abrir menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-</nav>
+  // fechar menu mobile se estiver aberto
+  const overlay = document.getElementById('mobile-menu-overlay');
+  if (overlay.classList.contains('open')) {
+    overlay.classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 
-<!-- Fullscreen mobile menu overlay -->
-<div id="mobile-menu-overlay">
-  <a href="#historia" onclick="toggleMenu()">HISTÓRIA</a>
-  <a href="#galeria"  onclick="toggleMenu()">GALERIA</a>
-  <div class="menu-footer">
-    <p style="font-family:'Racing Sans One',cursive; color:#C1272D; font-size:1.1rem; letter-spacing:.15em;">SERGINHO 70</p>
-    <p style="color:#4b5563; font-size:.75rem; margin-top:.25rem;">❤️ 70 Anos de Emoção nas Pistas da Vida 🏁</p>
-  </div>
-</div>
+  setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+});
 
-<!-- ═══════════════════════════════════════════
-     HERO SECTION
-════════════════════════════════════════════ -->
-<section class="hero-bg min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-20">
+/* ══════════════════════════════════════════
+   CONTADOR ANIMADO — 0 → 70
+══════════════════════════════════════════ */
+function animateCounter(target, duration) {
+  const el = document.getElementById('counter');
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { el.textContent = target; clearInterval(timer); return; }
+    el.textContent = Math.floor(start);
+  }, 16);
+}
 
-  <!-- Linhas decorativas de corrida -->
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-0 left-0 w-full h-full opacity-10"
-         style="background: repeating-linear-gradient(45deg, transparent, transparent 40px, #C1272D22 40px, #C1272D22 42px);">
-    </div>
-  </div>
+// Dispara quando o contador entra na tela
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { animateCounter(70, 2000); counterObs.disconnect(); }
+  });
+}, { threshold: 0.3 });
+counterObs.observe(document.getElementById('counter'));
 
-  <!-- Badge -->
-  <div data-aos="zoom-in" data-aos-delay="200"
-       class="mb-2 font-bold text-center px-5 py-2 rounded-full text-xs md:text-sm tracking-widest uppercase shadow-lg rotate-[-2deg]"
-       style="font-family:'Racing Sans One',cursive; margin-top:2rem; background:#000; color:#C1272D;">
-    🏆 O Maior Vendedor de Auto-Peças do Brasil 🏆
-  </div>
+/* ══════════════════════════════════════════
+   GALERIA — filtro por abas
+══════════════════════════════════════════ */
+function filterGallery(cat) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active', 'bg-flared', 'text-white');
+    b.classList.add('text-gray-300');
+  });
+  const activeBtn = document.querySelector(`[data-cat="${cat}"]`);
+  if (activeBtn) { activeBtn.classList.add('active'); activeBtn.classList.remove('text-gray-300'); }
 
-  <!-- Título principal -->
-  <h1 data-aos="fade-up" data-aos-delay="100"
-      class="hero-title font-racing text-center px-4 leading-tight mb-1"
-      style="font-size:clamp(2.2rem,7vw,5.5rem);">
-    <span class="metallic">SERGINHO</span>
-  </h1>
-  <h2 data-aos="fade-up" data-aos-delay="250"
-      class="font-racing text-center text-white px-4 mb-0"
-      style="font-size:clamp(1rem,3vw,2rem); letter-spacing:.12em;">
-    70 ANOS DE EMOÇÃO NAS
-  </h2>
-  <h2 data-aos="fade-up" data-aos-delay="350"
-      class="font-racing text-center text-white px-4 mb-3"
-      style="font-size:clamp(1.4rem,4.5vw,3rem); letter-spacing:.08em;">
-    🏁 PISTAS DA VIDA 🏁
-  </h2>
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    const cats = item.dataset.cat || '';
+    if (cat === 'todos' || cats.includes(cat)) {
+      item.style.display = '';
+      item.style.animation = 'fadeIn .4s ease';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
 
-  <!-- Apelidos -->
-  <div data-aos="fade-up" data-aos-delay="400" class="flex flex-wrap justify-center gap-3 mb-4 px-4">
-    <span style="background:#000; border:2px solid #000; color:#C1272D;" class="font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
-      💑 "Ginho" — pra Márcia
-    </span>
-    <span style="background:#000; border:2px solid #000; color:#C1272D;" class="font-bold px-4 py-2 rounded-lg text-sm tracking-wide">
-      👊 "Serginho Bundinha" — pros amigos
-    </span>
-  </div>
+/* ══════════════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════════════ */
+function openLightbox(card) {
+  const img = card.querySelector('img');
+  if (!img) return;
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.getElementById('lightbox-close').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
 
-  <!-- Foto principal -->
-  <div data-aos="zoom-in" data-aos-delay="500"
-       class="relative max-w-sm md:max-w-md w-full mx-4 mt-2">
-    <div class="absolute -inset-1 rounded-2xl"
-         style="background:linear-gradient(45deg,#C1272D,#FFD700,#C1272D); filter:blur(12px); opacity:.7; z-index:-1;">
-    </div>
-    <img src="assets/serginho.png" alt="Serginho ao lado do busto de Ayrton Senna"
-         class="w-full rounded-2xl shadow-2xl border-2 border-flared/50 object-cover"
-         style="max-height:460px; object-position:top;" />
-    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent rounded-b-2xl p-4">
-      <p class="font-chalk text-white text-center text-lg">
-        Ao lado do lendário Ayrton Senna 🏎️
-      </p>
-    </div>
-  </div>
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox-close').style.display = 'none';
+  document.body.style.overflow = '';
+  clearPopped();
+}
 
-  <!-- Seta scroll -->
-  <div class="mt-12 animate-bounce text-3xl text-flared/70">↓</div>
-</section>
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-<div class="flag-stripe"></div>
+/* ══════════════════════════════════════════
+   WHATSAPP
+══════════════════════════════════════════ */
+function sendWhatsApp() {
+  const msg = encodeURIComponent(
+    '🎉🏁 Parabéns, Serginho!! 70 anos com a emoção de Ayrton Senna e a paixão do Flamengo! ' +
+    'Muita saúde, alegria e muitas pistas ainda por percorrer! Feliz aniversário, Ginho! ❤️🖤🏎️'
+  );
+  window.open(`https://wa.me/5521971444414?text=${msg}`, '_blank');
+}
 
-<!-- ═══════════════════════════════════════════
-     HISTÓRIA / CONTADOR
-════════════════════════════════════════════ -->
-<section id="historia" class="py-20 px-4 relative overflow-hidden">
-  <div class="track-line"></div>
-  <div class="max-w-5xl mx-auto">
+/* ══════════════════════════════════════════
+   EASTER EGG — escudo do Flamengo
+══════════════════════════════════════════ */
+function easterEgg() {
+  const shield = document.getElementById('fla-shield');
+  // para o tremor, aplica glow, depois retoma o tremor
+  shield.style.animation = 'none';
+  shield.classList.add('glowing');
+  setTimeout(() => {
+    shield.classList.remove('glowing');
+    shield.style.animation = '';
+  }, 1800);
 
-    <h2 data-aos="fade-up" class="sec-title font-racing text-center text-4xl md:text-5xl text-white mb-16">
-      70 ANOS DE GLÓRIA
-    </h2>
+  playTorcida();
 
-    <!-- Contador -->
-    <div data-aos="zoom-in" class="flex flex-col items-center mb-20">
-      <div class="flex items-end gap-4">
-        <div class="text-center">
-          <div class="counter-digit" id="counter">0</div>
-          <p class="font-racing text-gray-400 text-lg tracking-widest uppercase mt-1">Anos</p>
-        </div>
-        <div class="text-6xl md:text-8xl text-flaGold mb-4">🏁</div>
-      </div>
-      <p class="text-gray-300 mt-4 text-center max-w-md">
-        Sete décadas percorridas com a velocidade de quem nunca pisou no freio — na vida, no trabalho e no amor pelo Fla!
-      </p>
-    </div>
+  const flash = document.createElement('div');
+  flash.style.cssText = 'position:fixed;inset:0;z-index:9997;pointer-events:none;' +
+    'background:linear-gradient(135deg,#C1272D88,#00000088);animation:flashAnim .6s ease forwards;';
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 700);
 
-    <!-- Paixões -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+  const toast = document.createElement('div');
+  toast.innerHTML = '❤️🖤 URUBU NA VEIA!! MENGÃO!! 🖤❤️';
+  toast.style.cssText =
+    'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9998;' +
+    'font-family:"Racing Sans One",cursive;font-size:clamp(1.5rem,5vw,3rem);' +
+    'color:#FFD700;text-shadow:0 0 30px #C1272D;text-align:center;' +
+    'pointer-events:none;animation:toastAnim 2s ease forwards;';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2100);
 
-      <div data-aos="fade-right" data-aos-delay="100"
-           class="bg-gradient-to-b from-flared/20 to-black/50 border border-flared/30 rounded-2xl p-8 text-center hover:border-flared transition-all duration-300">
-        <div>
-          <img src="assets/logo.png" alt="Flamengo" width="80" height="90" class="mx-auto mb-4" style="object-fit:contain; filter:drop-shadow(0 0 3px #C1272D) drop-shadow(0 0 10px #C1272Dcc) drop-shadow(0 0 18px #C1272D88);" />
-        </div>
-        <h3 class="font-racing text-flared text-2xl mb-2">Mengão do Coração</h3>
-        <p class="text-gray-400 text-sm">Vermelho e preto correndo nas veias — Flamengo até morrer!</p>
-      </div>
+  launchConfetti(30);
+}
 
-      <div data-aos="fade-up" data-aos-delay="200"
-           class="bg-gradient-to-b from-flaGold/10 to-black/50 border border-flaGold/30 rounded-2xl p-8 text-center hover:border-flaGold transition-all duration-300">
-        <div class="text-7xl mb-4">🏎️</div>
-        <h3 class="font-racing text-flaGold text-2xl mb-2">Espírito Senna</h3>
-        <p class="text-gray-400 text-sm">A emoção de Ayrton vive em cada conversa, em cada foto, em cada memória especial.</p>
-      </div>
+/* ══════════════════════════════════════════
+   WEB AUDIO — torcida simulada
+══════════════════════════════════════════ */
+function playTorcida() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const now = ctx.currentTime;
 
-      <div data-aos="fade-left" data-aos-delay="300"
-           class="bg-gradient-to-b from-gray-700/20 to-black/50 border border-gray-600/30 rounded-2xl p-8 text-center hover:border-gray-400 transition-all duration-300">
-        <div class="text-7xl mb-4">🔧</div>
-        <h3 class="font-racing text-gray-300 text-2xl mb-2">Rei das Auto-Peças</h3>
-        <p class="text-gray-400 text-sm">Décadas de dedicação que fizeram dele o maior dos representantes. Uma lenda!</p>
-      </div>
-    </div>
+    for (let i = 0; i < 6; i++) {
+      const buf  = ctx.createBuffer(1, ctx.sampleRate * 0.3, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let j = 0; j < data.length; j++) data[j] = (Math.random() * 2 - 1) * 0.3;
+      const src  = ctx.createBufferSource();
+      src.buffer = buf;
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0, now + i * 0.15);
+      gain.gain.linearRampToValueAtTime(0.6, now + i * 0.15 + 0.05);
+      gain.gain.linearRampToValueAtTime(0, now + i * 0.15 + 0.3);
+      src.connect(gain);
+      gain.connect(ctx.destination);
+      src.start(now + i * 0.15);
+    }
 
-    <!-- Linha do tempo -->
-    <div data-aos="fade-up" class="relative border-l-4 border-flared/40 ml-6 md:ml-12 space-y-10 pb-4">
-      <div class="absolute -left-[10px] top-0 bottom-0 w-2 bg-flared/20 rounded"></div>
+    const osc     = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(220, now + 0.9);
+    osc.frequency.linearRampToValueAtTime(440, now + 1.1);
+    osc.frequency.linearRampToValueAtTime(330, now + 1.4);
+    oscGain.gain.setValueAtTime(0.2, now + 0.9);
+    oscGain.gain.linearRampToValueAtTime(0, now + 1.6);
+    osc.connect(oscGain);
+    oscGain.connect(ctx.destination);
+    osc.start(now + 0.9);
+    osc.stop(now + 1.7);
+  } catch (e) {
+    console.log('Áudio não disponível');
+  }
+}
 
-      <div class="relative pl-8">
-        <div class="absolute -left-[22px] w-10 h-10 bg-flared rounded-full flex items-center justify-center text-lg shadow-lg shadow-flared/40">🍼</div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <p class="font-racing text-flared text-xl">1956</p>
-          <p class="text-gray-300">Nascimento do Serginho — o mundo ganhou um piloto de vida!</p>
-        </div>
-      </div>
+/* ══════════════════════════════════════════
+   CONFETTI
+══════════════════════════════════════════ */
+const confettiColors = ['#C1272D', '#FFD700', '#ffffff', '#000000', '#ff6b6b', '#ffd93d'];
 
-      <div class="relative pl-8">
-        <div class="absolute -left-[22px] w-10 h-10 bg-flaGold rounded-full flex items-center justify-center text-lg shadow-lg shadow-flaGold/40">💍</div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <p class="font-racing text-flaGold text-xl">Grande Amor</p>
-          <p class="text-gray-300">Encontrou Márcia — sua co-pilota de todas as pistas da vida.</p>
-        </div>
-      </div>
+function launchConfetti(count = 80) {
+  for (let i = 0; i < count; i++) {
+    const el   = document.createElement('div');
+    el.className = 'confetti-piece';
+    const size = Math.random() * 10 + 6;
+    el.style.cssText = `
+      left:${Math.random() * 100}vw;
+      width:${size}px; height:${size}px;
+      background:${confettiColors[Math.floor(Math.random() * confettiColors.length)]};
+      border-radius:${Math.random() > .5 ? '50%' : '2px'};
+      animation-duration:${Math.random() * 2 + 2}s;
+      animation-delay:${Math.random() * 0.5}s;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4500);
+  }
+}
 
-      <div class="relative pl-8">
-        <div class="absolute -left-[22px] w-10 h-10 bg-flared rounded-full flex items-center justify-center text-lg shadow-lg shadow-flared/40">👨‍👧‍👦</div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <p class="font-racing text-flared text-xl">Família</p>
-          <p class="text-gray-300">Pillar e Caio — os filhos que são o pódio da sua vida.</p>
-        </div>
-      </div>
-
-      <div class="relative pl-8">
-        <div class="absolute -left-[22px] w-10 h-10 bg-flaGold rounded-full flex items-center justify-center text-lg shadow-lg shadow-flaGold/40">🏎️</div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <p class="font-racing text-flaGold text-xl">Ídolo Eterno</p>
-          <p class="text-gray-300">Ayrton Senna — o herói que inspira Serginho até hoje.</p>
-        </div>
-      </div>
-
-      <div class="relative pl-8">
-        <div class="absolute -left-[22px] w-10 h-10 bg-flared rounded-full flex items-center justify-center text-lg shadow-lg shadow-flared/40">🎂</div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <p class="font-racing text-flared text-xl">2026 — 70 ANOS!</p>
-          <p class="text-gray-300">Sete décadas de garra, amor, amizade e muita alegria!</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="flag-stripe"></div>
-
-<!-- ═══════════════════════════════════════════
-     GALERIA
-════════════════════════════════════════════ -->
-<section id="galeria" class="py-20 px-4" style="background:#C1272D;">
-  <div class="max-w-6xl mx-auto">
-
-    <h2 data-aos="fade-up" class="sec-title font-racing text-center text-4xl md:text-5xl text-white mb-4">
-      GALERIA DE MEMÓRIAS
-    </h2>
-    <p data-aos="fade-up" data-aos-delay="100" class="text-center text-black mb-10 max-w-xl mx-auto font-bold">
-      Momentos que valem mais que qualquer troféu. Clique nas fotos para ampliar!
-    </p>
-
-    <!-- Tabs -->
-    <div data-aos="fade-up" data-aos-delay="200" class="flex flex-wrap justify-center gap-3 mb-10">
-      <button onclick="filterGallery('todos')"     class="tab-btn active font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black" data-cat="todos">Todos</button>
-      <button onclick="filterGallery('familia')"   class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="familia">💑 Márcia & Família</button>
-      <button onclick="filterGallery('filhos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="filhos">👦 Pillar & Caio</button>
-      <button onclick="filterGallery('sobrinhos')" class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="sobrinhos">👨‍👩‍👧 Sobrinhos</button>
-      <button onclick="filterGallery('amigos')"    class="tab-btn font-bold px-5 py-2 rounded-full border border-black/40 text-sm transition-all text-black hover:bg-black/10" data-cat="amigos">🤜 Amigos</button>
-    </div>
-
-    <!-- Gallery grid -->
-    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
-      <div class="photo-card gallery-item col-span-2 row-span-2 h-72 md:h-96" data-cat="todos familia" onclick="openLightbox(this)">
-        <img src="assets/serginho.png" alt="Serginho com busto de Senna" loading="lazy" />
-        <div class="overlay"><span class="text-white font-bold text-sm">Serginho & Senna ❤️</span></div>
-      </div>
-
-      <div class="photo-card gallery-item h-44 md:h-48" data-cat="todos familia" onclick="openLightbox(this)">
-        <img src="assets/serginho2.png" alt="Serginho" loading="lazy" />
-        <div class="overlay"><span class="text-white font-bold text-sm">Sorriso do Ginho 😄</span></div>
-      </div>
-
-      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-flared/20 to-black/80 border border-flared/20 flex flex-col items-center justify-center" data-cat="todos amigos">
-        <div class="text-5xl mb-2">🤜🤛</div>
-        <p class="text-gray-400 text-xs text-center px-4">Adicione fotos<br>dos amigos aqui!</p>
-      </div>
-
-      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-flaGold/10 to-black/80 border border-flaGold/20 flex flex-col items-center justify-center" data-cat="todos filhos">
-        <div class="text-5xl mb-2">👦👦</div>
-        <p class="text-gray-400 text-xs text-center px-4">Pillar & Caio<br>Adicione as fotos!</p>
-      </div>
-
-      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-purple-900/30 to-black/80 border border-purple-500/20 flex flex-col items-center justify-center" data-cat="todos sobrinhos">
-        <div class="text-5xl mb-2">👨‍👩‍👧</div>
-        <p class="text-gray-400 text-xs text-center px-4">Sobrinhos<br>Adicione as fotos!</p>
-      </div>
-
-      <div class="photo-card gallery-item h-44 md:h-48 bg-gradient-to-br from-gray-700/30 to-black/80 border border-gray-600/20 flex flex-col items-center justify-center" data-cat="todos familia">
-        <div class="text-5xl mb-2">💑</div>
-        <p class="text-gray-400 text-xs text-center px-4">Márcia & Ginho<br>Adicione as fotos!</p>
-      </div>
-
-      <div class="photo-card gallery-item col-span-2 h-44 md:h-48 bg-gradient-to-br from-flared/10 to-black/80 border border-flared/20 flex flex-col items-center justify-center" data-cat="todos amigos">
-        <div class="text-5xl mb-2">🎉</div>
-        <p class="text-gray-400 text-sm text-center px-4">Galeria em construção — envie suas fotos!</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="flag-stripe"></div>
-
-<!-- ═══════════════════════════════════════════
-     MENSAGEM FINAL
-════════════════════════════════════════════ -->
-<section class="py-24 px-4 text-center relative overflow-hidden">
-  <div class="absolute inset-0 pointer-events-none opacity-5"
-       style="background: radial-gradient(ellipse at center, #C1272D 0%, transparent 70%);">
-  </div>
-
-  <div data-aos="zoom-in" class="max-w-3xl mx-auto">
-    <div class="text-7xl mb-6">🎂</div>
-    <h2 class="font-racing text-4xl md:text-6xl text-white mb-4">
-      Parabéns, <span class="text-flared">Ginho!</span>
-    </h2>
-    <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-      70 anos vividos com a intensidade de um piloto que sempre está nos pódios, a paixão de um torcedor no Maracanã e o amor de quem sabe que a vida é a melhor corrida de todas.
-    </p>
-    <p class="font-racing text-flaGold text-2xl md:text-3xl">
-      <span class="hidden md:inline">🏁 </span>Que venham os próximos 70!<span class="hidden md:inline"> 🏁</span>
-    </p>
-
-    <button onclick="launchConfetti()"
-            class="mt-10 bg-flared hover:bg-red-700 text-white font-racing text-xl px-10 py-4 rounded-full shadow-lg shadow-flared/40 transition-all hover:scale-105 active:scale-95">
-      🎉 Celebrar Agora!
-    </button>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
-<footer class="bg-black border-t border-flared/20 py-8 text-center">
-  <div class="flex flex-wrap justify-center gap-4 text-3xl mb-4">
-    <span>❤️</span><span>🖤</span><span>🏎️</span><span>🏁</span><span>🔧</span>
-  </div>
-  <p class="text-gray-500 text-sm font-chalk">
-    Feito com muito amor para o nosso Serginho — 70 anos de pura emoção!
-  </p>
-  <p class="text-gray-700 text-xs mt-2">Flamengo • Senna • Família • Amigos</p>
-</footer>
-
-
-<!-- Véu da galeria -->
-<div id="gallery-veil"></div>
-
-<!-- ═══════════════════════════════════════════
-     LIGHTBOX
-════════════════════════════════════════════ -->
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img" src="" alt="" />
-</div>
-<button id="lightbox-close" onclick="closeLightbox()" aria-label="Fechar foto">✕</button>
-
-<!-- ═══════════════════════════════════════════
-     DEPENDÊNCIAS JS E SCRIPT PRINCIPAL
-════════════════════════════════════════════ -->
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="script.js"></script>
-
-</body>
-</html>
