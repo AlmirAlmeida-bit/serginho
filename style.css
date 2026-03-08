@@ -17,22 +17,17 @@ body { background:#0a0a0a; color:#f0f0f0; font-family:'Montserrat',sans-serif; o
   height: 10px;
 }
 
-/* ── hero gradient ── */
+/* ── hero background ── */
 .hero-bg {
-  background: linear-gradient(135deg,
-    #0a0a0a 0%,
-    #1a0000 30%,
-    #C1272D 60%,
-    #6b0000 80%,
-    #2a2a2a 100%);
+  background: #C1272D;
 }
 
 /* ── metallic text ── */
 .metallic {
-  background: linear-gradient(180deg, #ffffff 0%, #C1272D 40%, #FFD700 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #C1272D;
+  -webkit-text-fill-color: #C1272D;
+  -webkit-text-stroke: 3px #000;
+  paint-order: stroke fill;
 }
 
 /* ── photo cards ── */
@@ -98,9 +93,10 @@ body { background:#0a0a0a; color:#f0f0f0; font-family:'Montserrat',sans-serif; o
 
 /* ── tab active ── */
 .tab-btn.active {
-  background: #C1272D;
-  color: #fff;
-  box-shadow: 0 4px 20px #C1272D88;
+  background: #000;
+  color: #fff !important;
+  border-color: #000 !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 
 /* ── nav ── */
@@ -143,12 +139,38 @@ nav {
   50%      { box-shadow: 0 4px 40px #C1272Dcc; }
 }
 
-/* ── Easter egg shield glow ── */
-#fla-shield { cursor: pointer; transition: filter .3s, transform .3s; }
-#fla-shield:hover { transform: scale(1.15); }
+/* ── Easter egg shield glow + tremor automático ── */
+#fla-shield {
+  cursor: pointer;
+  transition: filter .3s;
+  animation: shieldShake 3.5s ease-in-out infinite;
+  transform-origin: center bottom;
+  filter:
+    drop-shadow(0 0 3px #C1272D)
+    drop-shadow(0 0 6px #C1272Dcc)
+    drop-shadow(0 0 12px #C1272D88);
+}
+/* tremor: 3 chacoalhadas rápidas, depois pausa longa */
+@keyframes shieldShake {
+  0%    { transform: rotate(0deg) scale(1);    filter: drop-shadow(0 0 3px #C1272D) drop-shadow(0 0 6px #C1272Dcc) drop-shadow(0 0 12px #C1272D88); }
+  2%    { transform: rotate(-12deg) scale(1.08); }
+  4%    { transform: rotate(12deg) scale(1.08); }
+  6%    { transform: rotate(-10deg) scale(1.06); }
+  8%    { transform: rotate(10deg) scale(1.06); }
+  10%   { transform: rotate(-6deg) scale(1.04); }
+  12%   { transform: rotate(6deg) scale(1.04); }
+  14%   { transform: rotate(0deg) scale(1);    filter: drop-shadow(0 0 6px #C1272D) drop-shadow(0 0 20px #C1272D) drop-shadow(0 0 30px #FFD700aa); }
+  22%   { filter: drop-shadow(0 0 3px #C1272D) drop-shadow(0 0 6px #C1272Dcc) drop-shadow(0 0 12px #C1272D88); }
+  100%  { transform: rotate(0deg) scale(1);    filter: drop-shadow(0 0 3px #C1272D) drop-shadow(0 0 6px #C1272Dcc) drop-shadow(0 0 12px #C1272D88); }
+}
+#fla-shield:hover {
+  animation: none;
+  transform: scale(1.18);
+  filter: drop-shadow(0 0 16px #C1272D) drop-shadow(0 0 8px #FFD700);
+}
 #fla-shield.glowing {
-  filter: drop-shadow(0 0 20px #C1272D) drop-shadow(0 0 40px #FFD700);
   animation: shieldPulse .6s ease;
+  filter: drop-shadow(0 0 20px #C1272D) drop-shadow(0 0 40px #FFD700);
 }
 @keyframes shieldPulse {
   0%,100% { filter: drop-shadow(0 0 10px #C1272D); }
@@ -286,7 +308,8 @@ nav {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: 2.2rem;
+  padding-bottom: 6rem; /* empurra itens para cima do centro */
   opacity: 0;
   visibility: hidden;
   transform: scale(1.04);
@@ -326,6 +349,7 @@ nav {
 #mobile-menu-overlay.open a:nth-child(1) { transition-delay: 0.06s; transform: translateY(0); opacity: 1; }
 #mobile-menu-overlay.open a:nth-child(2) { transition-delay: 0.14s; transform: translateY(0); opacity: 1; }
 #mobile-menu-overlay.open a:nth-child(3) { transition-delay: 0.22s; transform: translateY(0); opacity: 1; }
+#mobile-menu-overlay.open a:nth-child(4) { transition-delay: 0.30s; transform: translateY(0); opacity: 1; }
 #mobile-menu-overlay a::after {
   content: '';
   display: block;
@@ -338,6 +362,9 @@ nav {
 }
 #mobile-menu-overlay a:hover { color: #C1272D; }
 #mobile-menu-overlay a:hover::after { width: 100%; }
+
+/* ── link Parabéns — mesmo estilo dos demais, centralizado ── */
+#menu-wa-btn { text-align: center; }
 
 .menu-footer {
   position: absolute;
