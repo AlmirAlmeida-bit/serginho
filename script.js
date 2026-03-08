@@ -16,28 +16,65 @@ AOS.init({ once: true, duration: 800, easing: 'ease-out-cubic' });
 ══════════════════════════════════════════ */
 const veil = document.getElementById('gallery-veil');
 
+// detecta dispositivo touch
+const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+function clearPopped() {
+  document.querySelectorAll('.photo-card.popped').forEach(c => c.classList.remove('popped'));
+  veil.classList.remove('active');
+}
+
+// variáveis para distinguir tap de scroll no mobile
+let _touchStartY = 0;
+let _touchStartX = 0;
+let _touchMoved   = false;
+
 document.querySelectorAll('.photo-card').forEach(card => {
+
+  /* ── Desktop: hover ── */
   card.addEventListener('mouseenter', () => {
+    if (isTouchDevice()) return;
     card.classList.add('popped');
     veil.classList.add('active');
   });
   card.addEventListener('mouseleave', () => {
+    if (isTouchDevice()) return;
     card.classList.remove('popped');
     veil.classList.remove('active');
   });
-  // toque no mobile
-  card.addEventListener('touchstart', () => {
-    document.querySelectorAll('.photo-card').forEach(c => c.classList.remove('popped'));
-    card.classList.toggle('popped');
-    veil.classList.toggle('active', card.classList.contains('popped'));
+
+  /* ── Mobile: tap (não scroll) ── */
+  card.addEventListener('touchstart', e => {
+    _touchStartY  = e.touches[0].clientY;
+    _touchStartX  = e.touches[0].clientX;
+    _touchMoved   = false;
+  }, { passive: true });
+
+  card.addEventListener('touchmove', e => {
+    const dy = Math.abs(e.touches[0].clientY - _touchStartY);
+    const dx = Math.abs(e.touches[0].clientX - _touchStartX);
+    if (dy > 8 || dx > 8) _touchMoved = true;
+  }, { passive: true });
+
+  card.addEventListener('touchend', () => {
+    if (_touchMoved) return;           // foi scroll — ignora
+    const wasPopped = card.classList.contains('popped');
+    clearPopped();
+    if (!wasPopped) {
+      card.classList.add('popped');
+      veil.classList.add('active');
+    }
   }, { passive: true });
 });
 
-// toque fora fecha o efeito
-veil.addEventListener('click', () => {
-  document.querySelectorAll('.photo-card').forEach(c => c.classList.remove('popped'));
-  veil.classList.remove('active');
-});
+/* ── Fechar ao clicar no véu ── */
+veil.addEventListener('click',      clearPopped);
+veil.addEventListener('touchstart', clearPopped, { passive: true });
+
+/* ── Fechar automaticamente ao fazer scroll ── */
+window.addEventListener('scroll', () => {
+  if (document.querySelector('.photo-card.popped')) clearPopped();
+}, { passive: true });
 
 /* ══════════════════════════════════════════
    MENU MOBILE — fullscreen overlay
@@ -139,6 +176,7 @@ function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
   document.getElementById('lightbox-close').style.display = 'none';
   document.body.style.overflow = '';
+  clearPopped();
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
@@ -159,8 +197,13 @@ function sendWhatsApp() {
 ══════════════════════════════════════════ */
 function easterEgg() {
   const shield = document.getElementById('fla-shield');
+  // para o tremor, aplica glow, depois retoma o tremor
+  shield.style.animation = 'none';
   shield.classList.add('glowing');
-  setTimeout(() => shield.classList.remove('glowing'), 1800);
+  setTimeout(() => {
+    shield.classList.remove('glowing');
+    shield.style.animation = '';
+  }, 1800);
 
   playTorcida();
 
@@ -246,7 +289,3 @@ function launchConfetti(count = 80) {
   }
 }
 
-/* ── Confetti automático ao carregar ── */
-window.addEventListener('load', () => {
-  setTimeout(() => launchConfetti(25), 800);
-});
